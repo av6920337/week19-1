@@ -1,35 +1,32 @@
-function generatePostHTML(post){
-    const postElement=document.createElement('div');
+const container = document.getElementById('posts-container');
+
+function createPostHTML(post) {
+    const postElement = document.createElement('div');
     postElement.classList.add('post');
 
-    const postTitle=document.createElement('h3');
-    postTitle.textContent=post.title;
+    const titleElement = document.createElement('h2');
+    titleElement.textContent = post.title;
 
-    const postContent=document.createElement('p');
-    postContent.textContent=post.content;
+    const bodyElement = document.createElement('p');
+    bodyElement.textContent = post.body;
 
-    postElement.appendChild(postTitle);
-    postElement.appendChild(postContent);
+    postElement.appendChild(titleElement);
+    postElement.appendChild(bodyElement);
 
-    return postElement.outerHTML;
+    return postElement;
 }
 
-function addPostToContainer(container, postHTML) {
-    const containerElement = document.querySelector(container);
-    
-    const newPostElement = document.createElement('div');
-    newPostElement.innerHTML = postHTML;
-
-    containerElement.appendChild(newPostElement);
+function addPostToContainer(container, postElement) {
+    container.appendChild(postElement);
 }
 
 fetch('https://jsonplaceholder.typicode.com/posts')
 .then(response=>response.json())
-.then(posts=>{
-    // const container=document.getElementById('posts-container');
-    posts.forEach((post)=> {
-        const postHTML = generatePostHTML(post);
-        addPostToContainer(container,postHTML);
-    });
+.then(data=>{
+    data.forEach(post=>{
+        createPostHTML();
+    addPostToContainer();
+    })
 })
-.catch(error=>console,log(error));
+.catch(error=>console.log(error));
+
