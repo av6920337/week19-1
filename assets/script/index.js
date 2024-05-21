@@ -1,5 +1,3 @@
-const container = document.getElementById('posts-container');
-
 function createPostHTML(post) {
     const postElement = document.createElement('div');
     postElement.classList.add('post');
@@ -23,10 +21,11 @@ function addPostToContainer(container, postElement) {
 fetch('https://jsonplaceholder.typicode.com/posts')
 .then(response=>response.json())
 .then(data=>{
+    const container = document.querySelector('.container');
     data.forEach(post=>{
-        createPostHTML();
-    addPostToContainer();
-    })
+        const postElement=createPostHTML(post);
+        addPostToContainer(container,postElement);
+    });
 })
 .catch(error=>console.log(error));
 
